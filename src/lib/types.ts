@@ -18,6 +18,7 @@ export type Episode = {
   price_cents: number;
   views: number;
   has_subtitles?: boolean;
+  created_at?: string;
 };
 
 export type Season = {

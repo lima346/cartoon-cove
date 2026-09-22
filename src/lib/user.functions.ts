@@ -147,9 +147,9 @@ export const createPurchase = createServerFn({ method: "POST" })
     const { error } = await supabaseAdmin.from("purchases").insert({
       user_id: context.userId,
       kind: data.kind,
-      episode_id: data.kind === "episode" ? data.episodeId : null,
-      season_id: data.kind === "season" ? data.seasonId : null,
-      plan: data.kind === "plan" ? data.plan : null,
+      episode_id: data.kind === "episode" ? (data.episodeId ?? null) : null,
+      season_id: data.kind === "season" ? (data.seasonId ?? null) : null,
+      plan: data.kind === "plan" ? (data.plan ?? null) : null,
       amount_cents: amount,
       currency: settings.currency,
       method: data.method,
@@ -163,7 +163,7 @@ export const createPurchase = createServerFn({ method: "POST" })
       await supabaseAdmin.from("subscriptions").upsert(
         {
           user_id: context.userId,
-          plan: data.plan,
+          plan: data.plan ?? "monthly",
           status: "active",
           current_period_end: end.toISOString(),
         },
